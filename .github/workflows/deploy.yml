@@ -19,8 +19,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
 
-          rsync -az --delete
-          -e "ssh -i private_key -p ${{ secrets.KINSTA_STAGING_PORT }} -o StrictHostKeyChecking=no"
+          rsync -az --delete -e "ssh -i private_key -p *** -o StrictHostKeyChecking=no"
           ./ ${{ secrets.KINSTA_STAGING_USER }}@${{ secrets.KINSTA_STAGING_IP }}:${{ secrets.KINSTA_STAGING_PATH }}/
 
           rm private_key
@@ -37,8 +36,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
 
-          rsync -az --delete
-          -e "ssh -i private_key -p ${{ secrets.KINSTA_LIVE_PORT }} -o StrictHostKeyChecking=no"
+          rsync -az --delete -e "ssh -i private_key -p ${{ secrets.KINSTA_LIVE_PORT }} -o StrictHostKeyChecking=no"
           ./ ${{ secrets.KINSTA_LIVE_USER }}@${{ secrets.KINSTA_LIVE_IP }}:${{ secrets.KINSTA_LIVE_PATH }}/
 
           rm private_key
