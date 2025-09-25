@@ -13,13 +13,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Deploy Theme to Staging
+      - name: Deploy to staging
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
 
-          rsync -az --delete -e "ssh -i private_key -p *** -o StrictHostKeyChecking=no"
+          rsync -az --delete -e "ssh -i private_key -p ${{ secrets.KINSTA_STAGING_PORT }} -o StrictHostKeyChecking=no"
           ./ ${{ secrets.KINSTA_STAGING_USER }}@${{ secrets.KINSTA_STAGING_IP }}:${{ secrets.KINSTA_STAGING_PATH }}/
 
           rm private_key
